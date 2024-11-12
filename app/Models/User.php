@@ -36,9 +36,19 @@ class User extends Authenticatable implements FilamentUser, HasName
         );
     }
 
+    protected function roleName(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->getRoleNames()[0],
+        );
+    }
+
     public function canAccessPanel(Panel $panel): bool
     {
         if ($panel->getId() == 'admin' && $this->hasRole(RoleTypeEnum::Admin->value)) {
+            return true;
+        }
+        if ($panel->getId() == 'teacher' && $this->hasRole(RoleTypeEnum::Teacher->value)) {
             return true;
         }
         return false;
@@ -54,6 +64,7 @@ class User extends Authenticatable implements FilamentUser, HasName
         'sur_name',
         'email',
         'password',
+        'phone_number',
     ];
 
     /**

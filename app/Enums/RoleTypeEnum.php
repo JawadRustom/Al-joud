@@ -6,6 +6,7 @@ enum RoleTypeEnum: string
 {
     case Admin = 'admin';
     case User = 'user';
+    case Teacher = 'teacher';
 
     public static function toArray(): array
     {
@@ -24,5 +25,9 @@ enum RoleTypeEnum: string
     public function isUser(): bool
     {
         return $this == static::User;
+    }
+    public function isTeacher(): bool
+    {
+        return $this == static::Teacher;
     }
 }
