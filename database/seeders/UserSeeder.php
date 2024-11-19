@@ -52,7 +52,9 @@ class UserSeeder extends Seeder
                     'sur_name' => "User",
                     'email' => "user" . ($sequence->index + 1) . "@user.com",
                 ]
-            ))->create()->assignRole(RoleTypeEnum::User->value);
+            ))->create()->each(function ($user) {
+                $user->assignRole(RoleTypeEnum::User->value);
+            });
         // Create teacher user
         User::factory()
             ->count(5)
@@ -62,6 +64,8 @@ class UserSeeder extends Seeder
                     'sur_name' => "Teacher",
                     'email' => "Teacher" . ($sequence->index + 1) . "@Teacher.com",
                 ]
-            ))->create()->assignRole(RoleTypeEnum::Teacher->value);
+            ))->create()->each(function ($user) {
+                $user->assignRole(RoleTypeEnum::Teacher->value);
+            });
     }
 }
