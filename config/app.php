@@ -125,6 +125,7 @@ return [
 
     'providers' => \Illuminate\Support\ServiceProvider::defaultProviders()->merge([
         Spatie\Permission\PermissionServiceProvider::class,
+        Ejarnutowski\LaravelApiKey\Providers\ApiKeyServiceProvider::class,
     ])->toArray(),
 
 ];

@@ -23,25 +23,49 @@ class UserSeeder extends Seeder
             'email' => 'admin@admin.com',
         ])->assignRole(RoleTypeEnum::Admin->value);
 
-        // Create 10 regular users and assign the random role to each
-        $userCount = User::all()->count();
+//        // Create 10 regular users and assign the random role to each
+//        $userCount = User::all()->count();
+//        User::factory()
+//            ->count(10)
+//            ->state(new Sequence(
+//                fn($sequence) => [
+//                    'first_name' => "User" . ($sequence->index + 1),
+//                    'sur_name' => "User",
+//                    'email' => "user" . ($sequence->index + 1) . "@user.com",
+//                ]
+//            ))
+//            ->create()->each(function ($user) {
+//                // Retrieve roles excluding 'Admin' and convert to an array
+//                $roles = Role::query()->where('name', '!=', RoleTypeEnum::Admin->value)
+//                    ->pluck('name')
+//                    ->toArray();
+//                // Get a random role from the array
+//                $randomRole = $roles[array_rand($roles)];
+//                $user->assignRole($randomRole);
+//            });
+        // Create Users
         User::factory()
-            ->count(10)
+            ->count(5)
             ->state(new Sequence(
                 fn($sequence) => [
                     'first_name' => "User" . ($sequence->index + 1),
                     'sur_name' => "User",
                     'email' => "user" . ($sequence->index + 1) . "@user.com",
                 ]
-            ))
-            ->create()->each(function ($user) {
-                // Retrieve roles excluding 'Admin' and convert to an array
-                $roles = Role::query()->where('name', '!=', RoleTypeEnum::Admin->value)
-                    ->pluck('name')
-                    ->toArray();
-                // Get a random role from the array
-                $randomRole = $roles[array_rand($roles)];
-                $user->assignRole($randomRole);
+            ))->create()->each(function ($user) {
+                $user->assignRole(RoleTypeEnum::User->value);
+            });
+        // Create teacher user
+        User::factory()
+            ->count(5)
+            ->state(new Sequence(
+                fn($sequence) => [
+                    'first_name' => "Teacher" . ($sequence->index + 1),
+                    'sur_name' => "Teacher",
+                    'email' => "Teacher" . ($sequence->index + 1) . "@Teacher.com",
+                ]
+            ))->create()->each(function ($user) {
+                $user->assignRole(RoleTypeEnum::Teacher->value);
             });
     }
 }
