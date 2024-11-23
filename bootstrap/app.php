@@ -25,17 +25,17 @@ return Application::configure(basePath: dirname(__DIR__))
     })
     ->withExceptions(using: function (Exceptions $exceptions) {
         $exceptions->render(using: function (NotFoundHttpException $e, Request $request) {
-            $header = $request->header('X-Authorization');
-            $apiKey = ApiKey::getByKey($header);
-
-            if (!$apiKey instanceof ApiKey) {
-                return response([
-                    'errors' => [[
-                        'message' => 'Unauthorized'
-                    ]]
-                ], 401);
-            }
             if ($request->is('api/*')) {
+                $header = $request->header('X-Authorization');
+                $apiKey = ApiKey::getByKey($header);
+
+                if (!$apiKey instanceof ApiKey) {
+                    return response([
+                        'errors' => [[
+                            'message' => 'Unauthorized'
+                        ]]
+                    ], 401);
+                }
                 return response()->json([
                     'message' => 'Record not found.'
                 ], 404);
