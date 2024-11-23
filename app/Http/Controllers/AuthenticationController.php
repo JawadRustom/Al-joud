@@ -34,19 +34,19 @@ class AuthenticationController extends Controller
 //        return response(compact('token'));
 //    }
 
-//    public function logout()
-//    {
-//        // Revoke all tokens...
-//        auth()->user()->tokens()->delete();
-//
-//        // Revoke the token that was used to authenticate the current request...
-////        auth()->user()->currentAccessToken()->delete();
-//
-//        // Revoke a specific token...
-////        auth()->user()->tokens()->where('id', $tokenId)->delete();;
-//
-//        return response()->noContent();
-//    }
+    public function logout()
+    {
+        // Revoke all tokens...
+        auth()->user()->tokens()->delete();
+
+        // Revoke the token that was used to authenticate the current request...
+//        auth()->user()->currentAccessToken()->delete();
+
+        // Revoke a specific token...
+//        auth()->user()->tokens()->where('id', $tokenId)->delete();;
+
+        return response()->noContent();
+    }
     public function user()
     {
         return auth()->user();

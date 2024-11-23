@@ -13,15 +13,38 @@ return Application::configure(basePath: dirname(__DIR__))
         api: __DIR__ . '/../routes/api.php',
         commands: __DIR__ . '/../routes/console.php',
         health: '/up',
-        then: function () {
-            Route::middleware('api')
-                ->prefix('api')
-                ->middleware('auth.apikey')
-                ->group(base_path('routes/api.php'));
-        }
+//        then: function () {
+//            \Illuminate\Support\Facades\Route::middleware('api')
+//                ->prefix('api')
+//                ->middleware('auth.apikey')
+//                ->group(base_path('routes/api.php'));
+//        }
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->group('api', [
+            \Ejarnutowski\LaravelApiKey\Http\Middleware\AuthorizeApiKey::class,
+        ]);
+
+//        $middleware->use([\Ejarnutowski\LaravelApiKey\Http\Middleware\AuthorizeApiKey::class]);
+
+//        $middleware->prepend(\Ejarnutowski\LaravelApiKey\Http\Middleware\AuthorizeApiKey::class);
+
+//        $middleware->use([
+//            \App\Http\Middleware\LoggedInMiddleware::class
+//        ]);
+
+        $middleware->alias([
+            'logged.in.check' => \App\Http\Middleware\LoggedInMiddleware::class
+        ]);
+
+//        $middleware->appendToGroup('logged-in-group', [
+//            \App\Http\Middleware\LoggedInMiddleware::class
+//        ]);
+
+//        $middleware->prependToGroup('logged-in-group', [
+//        \App\Http\Middleware\LoggedInMiddleware::class
+//        ]);
+
     })
     ->withExceptions(using: function (Exceptions $exceptions) {
         $exceptions->render(using: function (NotFoundHttpException $e, Request $request) {

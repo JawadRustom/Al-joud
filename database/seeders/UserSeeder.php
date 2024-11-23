@@ -60,9 +60,9 @@ class UserSeeder extends Seeder
             ->count(5)
             ->state(new Sequence(
                 fn($sequence) => [
-                    'first_name' => "Teacher" . ($sequence->index + 1),
-                    'sur_name' => "Teacher",
-                    'email' => "Teacher" . ($sequence->index + 1) . "@Teacher.com",
+                    'first_name' => "teacher" . ($sequence->index + 1),
+                    'sur_name' => "teacher",
+                    'email' => "teacher" . ($sequence->index + 1) . "@teacher.com",
                 ]
             ))->create()->each(function ($user) {
                 $user->assignRole(RoleTypeEnum::Teacher->value);
